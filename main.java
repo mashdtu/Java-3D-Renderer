@@ -9,8 +9,6 @@ public class main {
         frame.setSize(600, 400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("3D Renderer");
-
-
         System.out.println("GUI created");
     }
 }
