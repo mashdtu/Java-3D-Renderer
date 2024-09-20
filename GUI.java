@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.util.Scanner;
 
 public class GUI extends JPanel implements  ActionListener {
-    Timer t = new Timer(50, this);
+    Timer t = new Timer(1, this);
     double x = 0; double y = 0;
     Scene scene = new Scene();
     Canvas canvas = new Canvas(new double[]{1920, 1080}, new double[]{25, 25});
@@ -31,6 +31,11 @@ public class GUI extends JPanel implements  ActionListener {
         scene.addPoint(new Point3D(10, 0, 10));
         scene.addPoint(new Point3D(10, 10, 0));
         scene.addPoint(new Point3D(10, 10, 10));
+        
+        for (int j = 0; j < scene.points.size(); j++) {
+            scene.points.set(j, scene.rotate_x(scene.points.elementAt(j), point_anchor, Math.PI/4));
+            scene.points.set(j, scene.rotate_y(scene.points.elementAt(j), point_anchor, Math.PI/4));
+        }
     }
 
     public void paintComponent (Graphics g) {
@@ -45,7 +50,7 @@ public class GUI extends JPanel implements  ActionListener {
 
     public void actionPerformed (ActionEvent e) {
         for (int j = 0; j < scene.points.size(); j++) {
-            scene.points.set(j, scene.rotate_z(scene.points.elementAt(j), point_anchor, Math.PI/256));
+            scene.points.set(j, scene.rotate_z(scene.points.elementAt(j), point_anchor, Math.PI/128));
         }
         render = canvas.renderCanvas(scene);
         for ( Point2D point : render ) {
