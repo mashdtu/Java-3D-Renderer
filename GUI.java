@@ -3,11 +3,11 @@ import java.awt.event.*;
 import java.awt.geom.*;
 import java.util.Vector;
 import javax.swing.*;
+import java.util.Scanner;
 
 public class GUI extends JPanel implements  ActionListener {
-    Timer t = new Timer(5, this);
-    double x = 0;
-    double y = 0;
+    Timer t = new Timer(50, this);
+    double x = 0; double y = 0;
     Scene scene = new Scene();
     Canvas canvas = new Canvas(new double[]{1920, 1080}, new double[]{25, 25});
     final Point3D point_anchor = new Point3D(5, 5, 5);
@@ -15,8 +15,14 @@ public class GUI extends JPanel implements  ActionListener {
     Vector<Point2D> render = new Vector<>();
 
     public GUI () {
-        canvas.viewpanel.moveCamera(-250, -5, 0);
+        System.out.print("INITIAL CAMERA POSITION: ");
+        String cameraPosition = new Scanner(System.in).nextLine().replaceAll("\\s","");
+        String[] arr = cameraPosition.split(",");
+        canvas.viewpanel.moveCamera(Integer.parseInt(arr[0]), Integer.parseInt(arr[1]), Integer.parseInt(arr[2]));
+        this.createScene();
+    }
 
+    private void createScene () {
         scene.addPoint(new Point3D(0, 0, 0));
         scene.addPoint(new Point3D(0, 0, 10));
         scene.addPoint(new Point3D(0, 10, 0));
@@ -43,10 +49,9 @@ public class GUI extends JPanel implements  ActionListener {
         }
         render = canvas.renderCanvas(scene);
         for ( Point2D point : render ) {
-            point.x = 600 + point.x * n;
-            point.y = 300 + point.y * n;
+            point.x = 600 - point.x * n;
+            point.y = 300 - point.y * n;
         }
         repaint();
     }
-    
 }
